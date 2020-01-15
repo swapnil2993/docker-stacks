@@ -16,6 +16,8 @@ services:
     ports:
       - "9200:9200"
       - "9300:9300"
+    networks:
+      - ek
     environment:
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - discovery.type=single-node
@@ -40,8 +42,14 @@ services:
         target: /usr/share/kibana/config/kibana.yml
     ports:
       - "5601:5601"
+    networks:
+      - ek
     depends_on:
       - elasticsearch
 
 volumes:
   elasticsearch-data:
+
+networks:
+  ek:
+    driver: bridge
